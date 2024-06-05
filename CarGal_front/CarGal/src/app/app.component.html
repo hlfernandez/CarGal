@@ -1,8 +1,0 @@
-<div>
-
-  @defer (when races) {
-  <app-table [displayedColumns]="displayedColumns" [data]="races"></app-table>
-  } @loading (after 100ms; minimum 2s) {
-  <mat-spinner></mat-spinner>
-  }
-</div>
