@@ -11,6 +11,10 @@ CarGal_front/CarGal/node_modules
 CarGal_front/CarGalnpm-debug.log
 CarGal_front/CarGalyarn-error.log
 
+
+CarGal_back/CarGal/node_modules
+CarGal_back/dist
+
 # IDEs and editors
 .idea/
 .project
@@ -21,7 +25,7 @@ CarGal_front/CarGalyarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
-CarGal_front/CarGal/.vscode/*
+CarGal_front/CarGal/.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
