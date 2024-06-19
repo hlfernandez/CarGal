@@ -26,12 +26,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export class AppComponent {
 
-  displayedColumns: string[] = ['fecha', 'nombre', 'origen'];
+  displayedColumns: string[] = ['origen', 'fecha', 'nombre'];
   races!: Carreira[];
   constructor(private racesService: RacesService,
   ) {
     this.racesService.getRaces().subscribe(races => {
-      races.map((race) => race.fecha = parse(race.fecha.toString(), 'dd/MM/yyyy', new Date()))
+      races.map((race) => race.fecha = parse(race.fecha.toString(), 'yyyy-MM-dd', new Date()))
       this.races = races;
       console.log(races)
     })

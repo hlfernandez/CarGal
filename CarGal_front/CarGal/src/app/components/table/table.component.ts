@@ -10,6 +10,7 @@ import { Carreira } from '../../shared/models/races.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-table',
@@ -26,7 +27,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatButtonModule,
     MatTooltipModule,
-    MatIconModule],
+    MatIconModule,
+    MatSelectModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
@@ -37,6 +39,7 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   dataSource!: MatTableDataSource<Carreira>;
+  originComboValues: string[] = [];
 
 
   constructor() { }
@@ -48,6 +51,7 @@ export class TableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
 
     this.dataSource.paginator = this.paginator;
+    this.originComboValues = [...new Set(this.data.map(c => c.origen || ''))];
   }
 
   applyFilter(event: Event) {

@@ -1,4 +1,13 @@
 <mat-form-field>
+    <mat-label>Orixen</mat-label>
+    <mat-select name="origin">
+        <mat-option>Todos</mat-option>
+        @for (origin of originComboValues; track origin) {
+        <mat-option [value]="origin">{{origin}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
+<mat-form-field>
     <mat-label>Filtro</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input>
 </mat-form-field>
