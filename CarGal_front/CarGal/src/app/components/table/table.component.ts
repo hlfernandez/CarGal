@@ -38,7 +38,7 @@ import { debounceTime } from 'rxjs';
     MatSelectModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    JsonPipe],
+  ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: es },
   {
     provide: DateAdapter,
