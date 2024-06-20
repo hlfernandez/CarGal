@@ -4,5 +4,5 @@ export interface Carreira {
     nombre: string;
     url: string;
     localidad: string;
-    origen?: string;
+    origen: string;
 }

@@ -1,16 +1,42 @@
-<mat-form-field>
-    <mat-label>Orixen</mat-label>
-    <mat-select name="origin">
-        <mat-option>Todos</mat-option>
-        @for (origin of originComboValues; track origin) {
-        <mat-option [value]="origin">{{origin}}</mat-option>
+<form [formGroup]="filtersForm">
+    <mat-form-field>
+        <mat-label>Orixen</mat-label>
+        <mat-select formControlName="origin" name="origin">
+            <mat-option>Todos</mat-option>
+            @for (origin of originComboValues; track origin) {
+            <mat-option [value]="origin">{{origin}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Filtro</mat-label>
+        <input matInput formControlName="text" placeholder="Buscar">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Data das carreiras</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate formControlName="dateStart" placeholder="Dende">
+            <input matEndDate formControlName="dateEnd" placeholder="Ata">
+        </mat-date-range-input>
+        <!-- <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint> -->
+        @if(!!filtersForm.controls['dateStart'].value || !!filtersForm.controls['dateEnd'].value){
+
+        <mat-datepicker-toggle matSuffix (click)="clearRange()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+        </mat-datepicker-toggle>
         }
-    </mat-select>
-</mat-form-field>
-<mat-form-field>
-    <mat-label>Filtro</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input>
-</mat-form-field>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        @if (filtersForm.controls['dateStart'].hasError('matStartDateInvalid')) {
+        <mat-error>Invalid start date</mat-error>
+        }
+        @if (filtersForm.controls['dateEnd'].hasError('matEndDateInvalid')) {
+        <mat-error>Invalid end date</mat-error>
+        }
+    </mat-form-field>
+    <p>Selected range: {{filtersForm.value | json}}</p>
+
+</form>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
     <!--- Note that these columns can be defined in any order.

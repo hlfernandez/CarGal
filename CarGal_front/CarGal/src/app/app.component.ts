@@ -31,7 +31,16 @@ export class AppComponent {
   constructor(private racesService: RacesService,
   ) {
     this.racesService.getRaces().subscribe(races => {
-      races.map((race) => race.fecha = parse(race.fecha.toString(), 'yyyy-MM-dd', new Date()))
+      races.map((race) => {
+        const temp = race.fecha;
+        race.fecha = race.fecha.toString().split('/')[0];
+        race.fecha = parse(race.fecha.toString(), 'yyyy-MM-dd', new Date())
+
+        if (race.fecha instanceof Date && isNaN((race.fecha).valueOf())) {
+          console.log(temp)
+        }
+
+      });
       this.races = races;
       console.log(races)
     })
