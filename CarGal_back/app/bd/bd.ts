@@ -1,8 +1,11 @@
+import Races from "../shared/models/races.model";
+
+
 export default class Bd {
 
     static #instance: Bd;
     private filesInfoData: Map<string, Date> = new Map();
-    private storedData: any;
+    private storedData!: Races[];
 
     private constructor() { }
 
@@ -14,15 +17,15 @@ export default class Bd {
         return Bd.#instance;
     }
 
-    getBdData() {
+    getBdData(): Races[] {
         return this.storedData;
     }
 
-    setBdData(data: any) {
+    setBdData(data: Races[]) {
         this.storedData = data;
     }
 
-    getFilesInfo(data: any) {
+    getFilesInfo() {
         return this.filesInfoData;
     }
 

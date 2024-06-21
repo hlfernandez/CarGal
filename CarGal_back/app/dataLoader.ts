@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import Bd from "./bd/bd";
+import Races from "./shared/models/races.model"
 
 
 export default class DataLoader {
@@ -34,7 +35,7 @@ export default class DataLoader {
 
     }
 
-    private parseToJSON(csv: string, fileName: string, separator: string = ';', fileHeaders: string[] = this.DEFAULT_HEADERS): any[] {
+    private parseToJSON(csv: string, fileName: string, separator: string = ';', fileHeaders: string[] = this.DEFAULT_HEADERS): Races[] {
         const lines = csv.split('\n')
 
         const result: any = []
