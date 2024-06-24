@@ -16,14 +16,15 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 const port = process.env.PORT || 3000;
 const serverMode = process.env.SERVER_MODE || 'LOCAL';
 const dataURL = process.env.URL_FILE_WITH_FILENAMES || '';
+const HOME = process.env.HOME || '';
 const dataRoute: string =
-  (process.env.SERVER_MODE === 'REMOTE' ? process.env.CSV_FOLDER_REMOTE : process.env.CSV_FOLDER) || '';
+  ((process.env.SERVER_MODE === 'REMOTE' ? process.env.CSV_FOLDER_REMOTE : process.env.CSV_FOLDER) || '')
+  .replace('${HOME}', HOME);
 const serverFilesModificationData = new Map<string, Date>();
 const update_interval = parseInt(process.env.REMOTE_UPDATE_INTERVAL as string) || 43200000;
 
 console.log(dataURL);
 if (serverMode === 'REMOTE') {
-
   const allowedFileExtensions = process.env.FILE_EXTENSIONS || '.csv';
   // const searchExtensionFilesToDownload = allowedFileExtensions.split(' ');
   const baseUrl = process.env.URL_BASE_DOWNLOAD || '';
