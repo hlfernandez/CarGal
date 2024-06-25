@@ -1,4 +1,4 @@
-import FileOrigins from "../shared/models/fileOrigin.model";
+import FileOrigins from "../shared/models/file-origin.model";
 import Races from "../shared/models/races.model";
 
 

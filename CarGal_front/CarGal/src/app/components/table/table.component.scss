@@ -2,6 +2,11 @@
     background-color: #f5f5f5
 }
 
+.header {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
 .link-small {
     // transform: scale(0.66);
     font-size: 12px;
@@ -35,5 +40,24 @@
     .mat-mdc-button-touch-target {
         width: 24px !important;
         height: 24px !important;
+    }
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filters-item {
+    flex-basis: 33%;
+}
+
+@media screen and (max-width:768px) {
+    .filters {
+        flex-wrap: wrap;
+    }
+
+    .filters-item {
+        flex-basis: 100%;
     }
 }

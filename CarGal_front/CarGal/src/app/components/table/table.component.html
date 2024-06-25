@@ -1,39 +1,42 @@
 <form [formGroup]="filtersForm">
-    <mat-form-field>
-        <mat-label>Orixen</mat-label>
-        <mat-select formControlName="origin" name="origin">
-            <mat-option>Todos</mat-option>
-            @for (origin of originComboValues; track origin) {
-            <mat-option [value]="origin">{{origin}}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Filtro</mat-label>
-        <input matInput formControlName="text" placeholder="Buscar">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Data das carreiras</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate formControlName="dateStart" placeholder="Dende">
-            <input matEndDate formControlName="dateEnd" placeholder="Ata">
-        </mat-date-range-input>
-        <!-- <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint> -->
-        @if(!!filtersForm.controls['dateStart'].value || !!filtersForm.controls['dateEnd'].value){
+    <div class="filters">
+        <mat-form-field class="filters-item">
+            <mat-label>Orixe</mat-label>
+            <mat-select formControlName="origin" name="origin">
+                <mat-option>Todos</mat-option>
+                @for (origin of originComboValues; track origin) {
+                <mat-option [value]="origin">{{origin}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="filters-item">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="text" placeholder="Buscar">
+        </mat-form-field>
+        <mat-form-field class="filters-item">
+            <mat-label>Data das carreiras</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate formControlName="dateStart" placeholder="Dende">
+                <input matEndDate formControlName="dateEnd" placeholder="Ata">
+            </mat-date-range-input>
+            <!-- <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint> -->
+            @if(!!filtersForm.controls['dateStart'].value || !!filtersForm.controls['dateEnd'].value){
 
-        <mat-datepicker-toggle matSuffix (click)="clearRange()">
-            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
-        </mat-datepicker-toggle>
-        }
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-        @if (filtersForm.controls['dateStart'].hasError('matStartDateInvalid')) {
-        <mat-error>Invalid start date</mat-error>
-        }
-        @if (filtersForm.controls['dateEnd'].hasError('matEndDateInvalid')) {
-        <mat-error>Invalid end date</mat-error>
-        }
-    </mat-form-field>
+            <mat-datepicker-toggle matSuffix (click)="clearRange()">
+                <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+            </mat-datepicker-toggle>
+            }
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            @if (filtersForm.controls['dateStart'].hasError('matStartDateInvalid')) {
+            <mat-error>Invalid start date</mat-error>
+            }
+            @if (filtersForm.controls['dateEnd'].hasError('matEndDateInvalid')) {
+            <mat-error>Invalid end date</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
 </form>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
@@ -57,7 +60,7 @@
     </ng-container>
 
     <ng-container matColumnDef="origen">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Orixen </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Orixe </th>
         <td mat-cell *matCellDef="let element"> {{element.origen}}</td>
     </ng-container>
 
@@ -70,7 +73,7 @@
 
 
 
-    <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;" [ngClass]="{gray: even}"></tr>
+    <tr mat-header-row *matHeaderRowDef=" displayedColumns" class="header"></tr>
+    <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;" [ngClass]="{gray: !even}"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[10, 20, 30]" aria-label="Seleccionar elementos por página"></mat-paginator>

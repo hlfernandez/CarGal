@@ -6,7 +6,7 @@ import fs from "node:fs/promises";
 import cors from "cors";
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
-import FileOrigins from "./shared/models/fileOrigin.model";
+import FileOrigins from "./shared/models/file-origin.model";
 import Bd from "./bd/bd";
 dotenv.config();
 

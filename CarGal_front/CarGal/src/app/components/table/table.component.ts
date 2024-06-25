@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort, MatSortModule, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterOutlet } from '@angular/router';
@@ -18,6 +18,7 @@ import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns
 import { es } from 'date-fns/locale';
 import { Filters } from '../../shared/models/filters.model';
 import { debounceTime } from 'rxjs';
+import { PaginatorIntl } from '../../shared/utils/paginatorIntl';
 
 @Component({
   selector: 'app-table',
@@ -45,7 +46,8 @@ import { debounceTime } from 'rxjs';
     useClass: DateFnsAdapter,
     deps: [MAT_DATE_LOCALE],
   },
-  { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
+  { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS },
+  { provide: MatPaginatorIntl, useClass: PaginatorIntl }
   ],
 
   templateUrl: './table.component.html',

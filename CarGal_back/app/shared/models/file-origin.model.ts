@@ -1,5 +1,5 @@
 
-export default interface FileOrigins {
+export default interface FileOrigin {
     origen: string;
     filename: string;
 }
