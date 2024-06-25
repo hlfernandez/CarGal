@@ -6,6 +6,8 @@ import fs from "node:fs/promises";
 import cors from "cors";
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
+import FileOrigins from "./shared/models/fileOrigin.model";
+import Bd from "./bd/bd";
 dotenv.config();
 
 const app: Express = express();
@@ -19,7 +21,7 @@ const dataURL = process.env.URL_FILE_WITH_FILENAMES || '';
 const HOME = process.env.HOME || '';
 const dataRoute: string =
   ((process.env.SERVER_MODE === 'REMOTE' ? process.env.CSV_FOLDER_REMOTE : process.env.CSV_FOLDER) || '')
-  .replace('${HOME}', HOME);
+    .replace('${HOME}', HOME);
 const serverFilesModificationData = new Map<string, Date>();
 const update_interval = parseInt(process.env.REMOTE_UPDATE_INTERVAL as string) || 43200000;
 
@@ -83,7 +85,16 @@ async function getFileNamesFromURL(url: string): Promise<string[]> {
   const resp = await axios.get(url);
   const { document } = new JSDOM(resp.data).window
   const elements = document.body.textContent || '';
-  return elements.split('\n').filter(e => !!e);
+  const fileOrigins: FileOrigins[] = [];
+  elements.split('\n').filter(e => !!e).forEach(element => {
+    const fo: FileOrigins = {
+      filename: element.split('\t')[0],
+      origen: element.split('\t')[1],
+    }
+    fileOrigins.push(fo)
+  });
+  Bd.instance.eventFilesNamesMapOrigin = fileOrigins;
+  return fileOrigins.map(x => x.filename);
 }
 
 

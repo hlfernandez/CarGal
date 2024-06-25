@@ -1,11 +1,13 @@
+import FileOrigins from "../shared/models/fileOrigin.model";
 import Races from "../shared/models/races.model";
 
 
 export default class Bd {
 
     static #instance: Bd;
-    private filesInfoData: Map<string, Date> = new Map();
-    private storedData!: Races[];
+    private _filesInfoData: Map<string, Date> = new Map();
+    private _storedData!: Races[];
+    private _eventFilesNamesMapOrigin!: FileOrigins[];
 
     private constructor() { }
 
@@ -17,20 +19,29 @@ export default class Bd {
         return Bd.#instance;
     }
 
-    getBdData(): Races[] {
-        return this.storedData;
+    get storedData(): Races[] {
+        return this._storedData;
     }
 
-    setBdData(data: Races[]) {
-        this.storedData = data;
+    set storedData(data: Races[]) {
+        this._storedData = data;
     }
 
-    getFilesInfo() {
-        return this.filesInfoData;
+    get filesInfoData() {
+        return this._filesInfoData;
     }
 
-    setFilesInfo(data: any) {
-        this.filesInfoData = data;
+    set filesInfoData(data: any) {
+        this._filesInfoData = data;
     }
+
+    get eventFilesNamesMapOrigin(): FileOrigins[] {
+        return this._eventFilesNamesMapOrigin;
+    }
+
+    set eventFilesNamesMapOrigin(data: FileOrigins[]) {
+        this._eventFilesNamesMapOrigin = data;
+    }
+
 
 }

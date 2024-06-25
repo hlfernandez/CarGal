@@ -7,9 +7,6 @@ import { Carreira } from './shared/models/races.model';
 import { TableComponent } from './components/table/table.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
-
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,7 +19,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-
 
 export class AppComponent {
 
@@ -38,8 +34,4 @@ export class AppComponent {
       this.races = races;
     })
   }
-
-
-
-
 }

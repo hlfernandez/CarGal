@@ -28,10 +28,11 @@ export default class DataLoader {
         let finalObject: any = []
         for (const name of names) {
             const data = await fs.readFile(`${this.path}/${name}`)
-            const result = this.parseToJSON(data.toString(), name)
+            const fileNameMap = Bd.instance.eventFilesNamesMapOrigin && Bd.instance.eventFilesNamesMapOrigin.find(x => x.filename === name)
+            const result = this.parseToJSON(data.toString(), fileNameMap?.origen || name)
             finalObject = finalObject.concat(result)
         }
-        Bd.instance.setBdData(finalObject)
+        Bd.instance.storedData = finalObject
 
     }
 

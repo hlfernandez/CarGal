@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { es } from 'date-fns/locale';
 import { Filters } from '../../shared/models/filters.model';
@@ -87,7 +87,6 @@ export class TableComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.originComboValues = [...new Set(this.data.map(c => c.origen || ''))];
 
-
   }
 
   applyFilters(filterValues: Filters) {
@@ -107,7 +106,6 @@ export class TableComponent implements AfterViewInit {
       }
 
       return originFilter && textFilter && datesFilter;
-
     })
 
   }

@@ -14,6 +14,7 @@ CarGal_front/CarGalyarn-error.log
 
 CarGal_back/node_modules
 CarGal_back/dist
+CarGal_back/onlineData
 
 # IDEs and editors
 .idea/
