@@ -4,9 +4,10 @@ import DataLoader from "./dataLoader";
 export default class FolderChecker {
 
     watcher: FSWatcher;
-    constructor(folder: string) {
-        this.watcher = chokidar.watch(folder, {})
+    constructor(folder: string, ignoredFiles?: string[]) {
+        this.watcher = chokidar.watch(folder, { ignored: ignoredFiles, ignoreInitial: true })
         DataLoader.instance.setPath(folder);
+        DataLoader.instance.setIgnoredFiles(ignoredFiles || []);
         this.setWatchers();
     }
 

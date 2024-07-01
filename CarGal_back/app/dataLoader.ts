@@ -1,12 +1,15 @@
 import fs from "node:fs/promises";
 import Bd from "./bd/bd";
 import Races from "./shared/models/races.model"
+import path from "node:path";
 
 
 export default class DataLoader {
     static #instance: DataLoader;
     fileNames: string[] = [];
     path = './data';
+    ignoredFiles: string[] = [];
+
 
     DEFAULT_HEADERS = ['fecha', 'nombre', 'url', 'localidad']
 
@@ -14,6 +17,10 @@ export default class DataLoader {
 
     public setPath(path: string) {
         this.path = path;
+    }
+
+    public setIgnoredFiles(ignoredFiles: string[]) {
+        this.ignoredFiles = ignoredFiles.map(element => path.basename(element));
     }
 
     public static get instance(): DataLoader {
@@ -24,7 +31,8 @@ export default class DataLoader {
     }
 
     public async readFiles() {
-        const names = await fs.readdir(this.path)
+
+        const names = (await fs.readdir(this.path)).filter(x => !this.ignoredFiles.includes(x))
         let finalObject: any = []
         for (const name of names) {
             const data = await fs.readFile(`${this.path}/${name}`)

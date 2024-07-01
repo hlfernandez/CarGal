@@ -2,7 +2,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import RacesController from "./api/races/races.controller";
 import FolderChecker from "./folderChecker";
-import fs from "node:fs/promises";
+import fs, { constants } from "node:fs/promises";
 import cors from "cors";
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
@@ -24,8 +24,8 @@ const dataRoute: string =
     .replace('${HOME}', HOME);
 const serverFilesModificationData = new Map<string, Date>();
 const update_interval = parseInt(process.env.REMOTE_UPDATE_INTERVAL as string) || 43200000;
+const dataLocalFile = (process.env.FILE_WITH_FILENAMES || '').replace('${HOME}', HOME);;
 
-console.log(dataURL);
 if (serverMode === 'REMOTE') {
   const allowedFileExtensions = process.env.FILE_EXTENSIONS || '.csv';
   // const searchExtensionFilesToDownload = allowedFileExtensions.split(' ');
@@ -53,7 +53,11 @@ if (serverMode === 'REMOTE') {
     await fs.access(dataRoute);
     const isDirectory = (await fs.lstat(dataRoute)).isDirectory()
     if (isDirectory) {
-      new FolderChecker(dataRoute)
+      if (serverMode !== 'REMOTE' && dataLocalFile && await getFileNamesFromTsvFile(dataLocalFile)) {
+        new FolderChecker(dataRoute, [dataLocalFile])
+      } else {
+        new FolderChecker(dataRoute)
+      }
     }
   } catch (error) {
     throw new Error('No existe el fichero especificado')
@@ -131,6 +135,25 @@ async function removeDeletedFiles(urlFileNames: string[], lastUpdateMap: Map<str
       await fs.unlink(`${dataRoute}/${name}`)
     }
   }
+}
+
+async function getFileNamesFromTsvFile(dataLocalFile: string): Promise<boolean> {
+  try {
+    const data = (await fs.readFile(dataLocalFile)).toString();
+    const fileOrigins: FileOrigins[] = [];
+    data.split('\n').filter(e => !!e).forEach(element => {
+      const fo: FileOrigins = {
+        filename: element.split('\t')[0],
+        origen: element.split('\t')[1],
+      }
+      fileOrigins.push(fo)
+    });
+    Bd.instance.eventFilesNamesMapOrigin = fileOrigins;
+    return true;
+  } catch (e) {
+    return false;
+  }
+
 }
 
 
